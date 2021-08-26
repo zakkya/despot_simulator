@@ -298,7 +298,6 @@ def on_enter_8_7(e):
 # Curseur plus sur objet (mutation)
 def on_leave(e):
     window.deiconify()
-    window2.delete("1.0",tk.END)
     window2.withdraw()
 
 def update_my_points():
