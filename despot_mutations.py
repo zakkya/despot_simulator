@@ -14,25 +14,24 @@ window.iconbitmap("tree.ico")
 window2.overrideredirect(True)
 window2.attributes('-alpha',0.9)
 
-
 # -- VARIABLES --
-# Points dépensés
+# Spended points
 my_points=0
-# Points dans chaque mutation
+# Points in each mutation
 mutation_2_1_pts = mutation_2_3_pts = mutation_2_5_pts = mutation_2_7_pts = mutation_4_1_pts = mutation_4_3_pts = mutation_4_5_pts = mutation_4_7_pts = 0
 mutation_4_9_pts = mutation_6_3_pts = mutation_6_5_pts = mutation_6_7_pts = mutation_8_1_pts = mutation_8_3_pts = mutation_8_5_pts = mutation_8_7_pts = 0
-# Level de chaque mutation
+# Mutation's level
 mutation_2_1_lvl = mutation_2_3_lvl = mutation_2_5_lvl = mutation_2_7_lvl = mutation_4_1_lvl = mutation_4_3_lvl = mutation_4_5_lvl = mutation_4_7_lvl = 0
 mutation_4_9_lvl = mutation_6_3_lvl = mutation_6_5_lvl = mutation_6_7_lvl = mutation_8_1_lvl = mutation_8_3_lvl = mutation_8_5_lvl = mutation_8_7_lvl = 0
-# Nom des mutations
+# Mutation's name
 mutation_name=["","THRILL ADDICTION","SALE!","WIDE CHOICE","MORE ALTARS","MANA REGENERATION","FAST RELOAD","MANA BONUS","MAGIC DEFENSE BONUS","TOPOCHLORIANS",
                "MGLW'NAFH","WGAH'NAGL","FHTAGN","THICK SKIN","HEALTH BONUS","ATTACK SPEED BONUS","VALOR"]
-# Description des mutations
+# Mutation's description
 mutation_description = ""
 # Labels
 my_button_2_1 = my_button_2_3 = my_button_2_5 = my_button_2_7 = my_button_4_1 = my_button_4_3 = my_button_4_5 = my_button_4_7 =  Button()
 my_button_4_9 = my_button_6_1 = my_button_6_3 = my_button_6_5 = my_button_8_1 = my_button_8_3 = my_button_8_5 = my_button_8_7 = Button()
-# Distance entre label (design)
+# Distance between label (design)
 distance_btw_labels_X=5
 distance_btw_labels_Y=5
 
@@ -58,19 +57,19 @@ mutation_8_7 = ImageTk.PhotoImage(Image.open("mutation_8_7.png"))
 between_1and2 = ImageTk.PhotoImage(Image.open("between_1and2.png"))
 
 # -- AUTRES --
-# Infos barre du bas
+# Infos bar (bottom)
 #status_label = Label(window, text="", bd=1, relief=SUNKEN, anchor=E)
 #status_label.grid(row=10,rowspan=10,column=9)
 
 # -- FONCTIONS --
-# Positon du curseur
+# Mouse position
 def mouse_pos(event):
     x, y = pyautogui.position()
     window2.geometry("+{}+{}".format(x+30, y+30))
     #print('{}, {}'.format(x, y))
 window.bind('<Motion>', mouse_pos)
 
-# Curseur sur objet (mutation)
+# Mouse on object (mutation)
 def on_enter_2_1(e):
     spell_name = mutation_name[1]
     if mutation_2_1_lvl == 0:
@@ -78,6 +77,10 @@ def on_enter_2_1(e):
         spell_effects = ""
         spell_next_effects = "Restocking the shop is 1 token cheaper"
     elif mutation_2_1_lvl == 1:
+        spell_cost = "10"
+        spell_effects = "Restocking the shop is 1 token cheaper"
+        spell_next_effects = "Restocking the shop is 2 tokens cheaper"
+    elif mutation_2_1_lvl == 2:
         spell_cost = "10"
         spell_effects = "Restocking the shop is 1 token cheaper"
         spell_next_effects = "Restocking the shop is 2 tokens cheaper"
@@ -295,15 +298,16 @@ def on_enter_8_7(e):
     Label(window2, text=mutation_description).grid(row=0,column=0)
     window2.deiconify()
     
-# Curseur plus sur objet (mutation)
+# Mouse when not on object (mutation)
 def on_leave(e):
+    notext = ""
     window.deiconify()
     window2.withdraw()
 
 def update_my_points():
     Label(window, text="Points \n spent : " + str(my_points), justify="center").grid(row=0,column=9)
 
-# Clic gauche sur button (évènement)
+# Left click on button (event)
 def button_lclick_2_1(event):
     global my_points
     global my_button_2_1
@@ -561,8 +565,7 @@ def button_lclick_8_7(event):
     update_my_points()
 
 
-# --- CLIC DROIT sur button (évènement) ---
-
+# Right click on button (event)
 def button_rclick_2_1(event):
     global mutation_2_1_pts
     global mutation_2_1_lvl
@@ -826,28 +829,27 @@ def initiate_image():
     Label(window, image=mutations_title, justify="center").grid(row=0,column=0,columnspan=12)
 initiate_image()
 
-# Points dépensés
+# Spended points
 def initiate_label():
     my_label_points = Label(window, text="Points \n spent : " + str(my_points), justify="center").grid(row=0,column=9)
 initiate_label()
 
-# LABELS INTER BUTTONS (pour visuel)
-# Axes verticaux
+# LABELS BTW BUTTONS (design)
+# Vertical axes
 def initiation_ver_label():
     for i in range (2, 11, 2):
         cmd = "my_label_1_" + str(i) + " = Label(window, padx=distance_btw_labels_Y).grid(row=1,column=" + str(i) + ")"
         exec(cmd)
 initiation_ver_label()
 
-# Axes horizontaux   
+# Horizontal axes  
 def initiation_hor_label():
     for i in range (1, 11, 2):
         cmd = "my_label_" + str(i) + " = Label(window, padx=distance_btw_labels_X).grid(row=" + str(i) + ")"
         exec(cmd)        
 initiation_hor_label()
 
-
-# Initiatilisation des boutons
+# Buttons initiate
 def initiate_buttons():
     initiate_button_2_1()
     initiate_button_2_3()
@@ -995,7 +997,5 @@ def initiate_button_8_7():
     my_button_8_7.bind("<Button-3>", button_rclick_8_7)
     
 initiate_buttons()
-
-# Description des mutations
 
 window.mainloop()
